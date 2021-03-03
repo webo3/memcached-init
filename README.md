@@ -4,6 +4,7 @@ Make sure you are aware that memcached-tool dump command can lock your memcached
 
 ## Copy memcache-copy.sh and memcache-firewall.sh in /usr/local/sbin/
 ```bash
+chmod +x *.sh
 cp *.sh /usr/local/sbin
 ```
 
@@ -17,9 +18,9 @@ systemctl edit memcached
 Put the following, save and exit.
 ```ini
 [Service]
-ExecStartPre=/usr/local/sbin/memcache-firewall.sh
-ExecStartPost=/usr/local/sbin/memcache-copy.sh
-ExecStopPost=/usr/local/sbin/memcache-firewall.sh
+ExecStartPre=+/usr/local/sbin/memcache-firewall.sh
+ExecStartPost=+/usr/local/sbin/memcache-copy.sh
+ExecStopPost=+/usr/local/sbin/memcache-firewall.sh
 EnvironmentFile=/etc/default/memcached
 ```
 
